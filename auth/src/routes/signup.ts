@@ -2,6 +2,7 @@ import { Application, NextFunction, Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
 import { BadRequestError, RequestValidationError } from '../errors'
 import { User } from '../models'
+import jwt from 'jsonwebtoken'
 
 export const addSignUpRoute = (app: Application) => {
   app.post(
@@ -28,6 +29,16 @@ export const addSignUpRoute = (app: Application) => {
 
       const user = User.build({ email, password })
       await user.save()
+
+      const userJwt = jwt.sign(
+        {
+          id: user.id,
+          email: user.email
+        },
+        'arst'
+      )
+
+      req.session = { userJwt }
 
       return res.status(201).send(user)
     }

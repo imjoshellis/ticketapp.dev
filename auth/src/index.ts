@@ -10,9 +10,13 @@ import {
   addSignUpRoute
 } from './routes'
 import mongoose from 'mongoose'
+import cookieSession from 'cookie-session'
 
 const app = express()
+app.set('trust proxy', true)
 app.use(json())
+
+app.use(cookieSession({ signed: false, secure: true }))
 
 addCurrentUserRoute(app)
 addSignInRoute(app)
