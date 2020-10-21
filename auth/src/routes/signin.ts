@@ -22,10 +22,9 @@ export const addSignInRoute = (app: Application) => {
     async (req: Request, res: Response) => {
       const { email, password } = req.body
 
-      if (existingUser) throw new BadRequestError('Email already in use')
-
-      const user = User.build({ email, password })
-      await user.save()
+      const user = await User.findOne({ email })
+      if (!user || !(await PasswordManager.compare(user.password, password)))
+        throw new BadRequestError('Invalid credentials')
 
       const userJwt = jwt.sign(
         {
