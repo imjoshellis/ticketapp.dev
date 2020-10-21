@@ -1,8 +1,8 @@
-import { NotFoundError } from './errors/notFoundError'
-import { errorHandler } from './middlewares/errorHandler'
+import { json } from 'body-parser'
 import express from 'express'
 import 'express-async-errors'
-import { json } from 'body-parser'
+import { NotFoundError } from './errors/notFoundError'
+import { errorHandler } from './middlewares/errorHandler'
 import {
   addCurrentUserRoute,
   addSignInRoute,
