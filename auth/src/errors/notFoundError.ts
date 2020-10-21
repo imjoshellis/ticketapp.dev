@@ -1,4 +1,4 @@
-import { CustomError, SerializedErrors } from './customError'
+import { CustomError, SerializedErrors } from './CustomError'
 
 export class NotFoundError extends CustomError {
   statusCode = 404

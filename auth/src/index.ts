@@ -1,7 +1,7 @@
 import { json } from 'body-parser'
 import express from 'express'
 import 'express-async-errors'
-import { NotFoundError } from './errors/notFoundError'
+import { NotFoundError } from './errors/NotFoundError'
 import { errorHandler } from './middlewares/errorHandler'
 import {
   addCurrentUserRoute,

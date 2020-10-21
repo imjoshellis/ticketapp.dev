@@ -1,4 +1,4 @@
-import { CustomError, SerializedErrors } from './customError'
+import { CustomError, SerializedErrors } from './CustomError'
 
 export class DatabaseConnectionError extends CustomError {
   statusCode = 500
