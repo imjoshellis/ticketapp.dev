@@ -1,1 +1,1 @@
-export { Password } from './password'
+export { PasswordManager } from './passwordManager'

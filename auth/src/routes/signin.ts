@@ -3,6 +3,7 @@ import { body } from 'express-validator'
 import jwt from 'jsonwebtoken'
 import { BadRequestError } from '../errors'
 import { User } from '../models'
+import { PasswordManager } from '../services'
 import { validateRequest } from './../middlewares'
 
 export const addSignInRoute = (app: Application) => {
@@ -21,7 +22,6 @@ export const addSignInRoute = (app: Application) => {
     async (req: Request, res: Response) => {
       const { email, password } = req.body
 
-      const existingUser = await User.findOne({ email })
       if (existingUser) throw new BadRequestError('Email already in use')
 
       const user = User.build({ email, password })
