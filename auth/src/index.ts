@@ -1,3 +1,4 @@
+import { NotFoundError } from './errors/notFoundError'
 import { errorHandler } from './middlewares/errorHandler'
 import express from 'express'
 import { json } from 'body-parser'
@@ -15,6 +16,10 @@ addCurrentUserRoute(app)
 addSignInRoute(app)
 addSignUpRoute(app)
 addSignOutRoute(app)
+
+app.all('*', () => {
+  throw new NotFoundError()
+})
 
 app.use(errorHandler)
 
