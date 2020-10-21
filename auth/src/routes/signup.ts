@@ -35,7 +35,7 @@ export const addSignUpRoute = (app: Application) => {
           id: user.id,
           email: user.email
         },
-        'arst'
+        process.env.JWT_KEY!
       )
 
       req.session = { userJwt }
