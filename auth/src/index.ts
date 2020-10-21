@@ -9,6 +9,7 @@ import {
   addSignOutRoute,
   addSignUpRoute
 } from './routes'
+import mongoose from 'mongoose'
 
 const app = express()
 app.use(json())
@@ -23,6 +24,21 @@ app.all('*', () => {
 })
 
 app.use(errorHandler)
+
+const start = async () => {
+  try {
+    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true
+    })
+    console.log('Connected to MongoDB')
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+start()
 
 app.listen(3000, () => {
   console.log('Listening on 3000')
