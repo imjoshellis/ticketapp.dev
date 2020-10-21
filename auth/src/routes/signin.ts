@@ -1,6 +1,6 @@
 import { Application } from 'express'
 
-export const addSigninRoute = (app: Application) => {
+export const addSignInRoute = (app: Application) => {
   app.post('/api/users/signin', (_, res) => {
     res.send('signin')
   })

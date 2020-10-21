@@ -1,4 +1,4 @@
-export { addCurrentUserRoute } from './currentuser'
-export { addSigninRoute } from './signin'
-export { addSignupRoute } from './signup'
-export { addSignoutRoute } from './signout'
+export { addCurrentUserRoute } from './currentUser'
+export { addSignInRoute } from './signIn'
+export { addSignUpRoute } from './signUp'
+export { addSignOutRoute } from './signOut'

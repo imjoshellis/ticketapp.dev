@@ -1,7 +1,9 @@
-import { Application, Request, Response } from 'express'
+import { RequestValidationError } from '../errors'
+import { Application, NextFunction, Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
+import { DatabaseConnectionError } from '../errors'
 
-export const addSignupRoute = (app: Application) => {
+export const addSignUpRoute = (app: Application) => {
   app.post(
     '/api/users/signup',
     [
@@ -13,14 +15,15 @@ export const addSignupRoute = (app: Application) => {
         .isLength({ min: 4, max: 20 })
         .withMessage('Password must be between 4 and 20 characters')
     ],
-    (req: Request, res: Response) => {
+    (req: Request, _res: Response, _next: NextFunction) => {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        return res.status(400).send(errors.array())
+        throw new RequestValidationError(errors.array())
       }
-      const { email, password } = req.body
+      // const { email, password } = req.body
       console.log('Creating a user...')
-      return res.send({ email, password })
+      throw new DatabaseConnectionError()
+      // return res.send({ email, password })
     }
   )
 }
