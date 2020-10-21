@@ -1,8 +1,9 @@
-import { Application, NextFunction, Request, Response } from 'express'
-import { body, validationResult } from 'express-validator'
-import { BadRequestError, RequestValidationError } from '../errors'
-import { User } from '../models'
+import { Application, Request, Response } from 'express'
+import { body } from 'express-validator'
 import jwt from 'jsonwebtoken'
+import { BadRequestError } from '../errors'
+import { User } from '../models'
+import { validateRequest } from './../middlewares/validateRequests'
 
 export const addSignUpRoute = (app: Application) => {
   app.post(
@@ -16,12 +17,8 @@ export const addSignUpRoute = (app: Application) => {
         .isLength({ min: 4, max: 20 })
         .withMessage('Password must be between 4 and 20 characters')
     ],
-    async (req: Request, res: Response, _next: NextFunction) => {
-      const errors = validationResult(req)
-      if (!errors.isEmpty()) {
-        throw new RequestValidationError(errors.array())
-      }
-
+    validateRequest,
+    async (req: Request, res: Response) => {
       const { email, password } = req.body
 
       const existingUser = await User.findOne({ email })
