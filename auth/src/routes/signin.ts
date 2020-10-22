@@ -36,7 +36,7 @@ export const addSignInRoute = (app: Application) => {
 
       req.session = { userJwt }
 
-      return res.status(201).send(user)
+      return res.status(200).send(user)
     }
   )
 }
