@@ -272,10 +272,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@ije-ticketapp/common@latest":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@ije-ticketapp/common/-/common-1.0.3.tgz#e5aeb89347e8a7800d44f4057ed1558639faccd7"
-  integrity sha512-mLvOuQHtITKLPtI7q+ESJhEM4ya1qJbGEbBUUhw2p39s8bl0YEExsiGgN07+3T2xpW+1DWP/BPHxUgVO6TbJRw==
+"@ije-ticketapp/common@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@ije-ticketapp/common/-/common-1.0.8.tgz#fc5d6c38683350f06735856224498987a6b56971"
+  integrity sha512-EqNaOBwcwSVSE6bTQ7aNk2RN0JMj16y/GdzIi1NYzRkLtprNAmPOvkFbqzOu4epxnqb6/JJ6SkfTg8Q1vqSGZA==
   dependencies:
     "@types/cookie-session" "^2.0.41"
     "@types/express" "^4.17.8"
@@ -641,9 +641,9 @@
     "@types/node" "*"
 
 "@types/node@*":
-  version "14.14.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.0.tgz#f1091b6ad5de18e8e91bdbd43ec63f13de372538"
-  integrity sha512-BfbIHP9IapdupGhq/hc+jT5dyiBVZ2DdeC5WwJWQWDb0GijQlzUFAeIQn/2GtvZcd2HVUU7An8felIICFTC2qg==
+  version "14.14.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.2.tgz#d25295f9e4ca5989a2c610754dc02a9721235eeb"
+  integrity sha512-jeYJU2kl7hL9U5xuI/BhKPZ4vqGM/OmK6whiFAXVhlstzZhVamWhDSmHyGLIp+RVyuF9/d0dqr2P85aFj4BvJg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"

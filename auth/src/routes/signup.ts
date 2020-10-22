@@ -1,9 +1,8 @@
+import { BadRequestError, validateRequest } from '@ije-ticketapp/common'
 import { Application, Request, Response } from 'express'
 import { body } from 'express-validator'
 import jwt from 'jsonwebtoken'
-import { BadRequestError } from '../errors'
 import { User } from '../models'
-import { validateRequest } from './../middlewares/validateRequests'
 
 export const addSignUpRoute = (app: Application) => {
   app.post(

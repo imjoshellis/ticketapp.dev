@@ -1,4 +1,4 @@
-import { currentUser } from '../middlewares'
+import { currentUser } from '@ije-ticketapp/common'
 import { Application } from 'express'
 
 export const addCurrentUserRoute = (app: Application) => {
