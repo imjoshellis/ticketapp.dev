@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default ({ currentUser }) => {
+export const Header = ({ currentUser }) => {
   const links = [
     !currentUser && { label: 'sign up', href: '/auth/signup' },
     !currentUser && { label: 'sign in', href: '/auth/signin' },
@@ -8,7 +8,7 @@ export default ({ currentUser }) => {
   ]
     .filter(link => link)
     .map(({ label, href }) => (
-      <li>
+      <li key={label}>
         <Link href={href}>
           <a className='nav-link'>{label}</a>
         </Link>
@@ -25,3 +25,5 @@ export default ({ currentUser }) => {
     </nav>
   )
 }
+
+export default Header
