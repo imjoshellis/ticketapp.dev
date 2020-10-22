@@ -1,5 +1,31 @@
-import { validationResult } from 'express-validator'
+import jwt from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
-import { RequestValidationError } from '../errors'
 
-export const currentUser = () => {}
+interface UserPayload {
+  id: string
+  email: string
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      currentUser?: UserPayload
+    }
+  }
+}
+
+export const currentUser = (
+  req: Request,
+  _res: Response,
+  next: NextFunction
+) => {
+  if (!req.session?.userJwt) return next()
+  try {
+    const payload = jwt.verify(
+      req.session.userJwt,
+      process.env.JWT_KEY!
+    ) as UserPayload
+    req.currentUser = payload
+  } catch (e) {}
+  next()
+}
