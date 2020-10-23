@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "publish": "ts-node-dev --rs --notify false src/publisher.ts",
+    "listen": "ts-node-dev --rs --notify false src/listener.ts"
+  },
   "dependencies": {
     "@types/node": "^14.14.2",
     "node-nats-streaming": "^0.3.2",
