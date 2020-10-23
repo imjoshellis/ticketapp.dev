@@ -5,6 +5,7 @@ import express from 'express'
 import 'express-async-errors'
 import {
   addNewRoute,
+  addShowRoute,
 } from './routes'
 
 const app = express()
@@ -21,6 +22,7 @@ app.use(
 app.use(currentUser)
 
 addNewRoute(app)
+addShowRoute(app)
 app.all('*', () => {
   throw new NotFoundError()
 })
