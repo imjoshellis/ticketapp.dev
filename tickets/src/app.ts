@@ -7,6 +7,7 @@ import {
   addAllRoute,
   addNewRoute,
   addShowRoute,
+  addUpdateRoute
 } from './routes'
 
 const app = express()
@@ -25,6 +26,8 @@ app.use(currentUser)
 addNewRoute(app)
 addShowRoute(app)
 addAllRoute(app)
+addUpdateRoute(app)
+
 app.all('*', () => {
   throw new NotFoundError()
 })
