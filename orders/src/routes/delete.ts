@@ -5,7 +5,9 @@ import {
   requireAuth
 } from '@ije-ticketapp/common'
 import { Application, Request, Response } from 'express'
+import { OrderCancelledPublisher } from '../events'
 import { Order } from '../models'
+import { natsWrapper } from '../natsWrapper'
 
 export const addDeleteRoute = (app: Application) => {
   app.delete(
@@ -19,6 +21,11 @@ export const addDeleteRoute = (app: Application) => {
 
       order.status = OrderStatus.Cancelled
       await order.save()
+
+      new OrderCancelledPublisher(natsWrapper.client).publish({
+        id: order.id,
+        ticket: { id: order.ticket.id }
+      })
 
       res.send(order)
     }

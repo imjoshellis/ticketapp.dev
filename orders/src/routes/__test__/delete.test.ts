@@ -9,6 +9,7 @@ const buildTicket = async () => {
   await ticket.save()
   return ticket
 }
+import { natsWrapper } from '../../natsWrapper'
 
 it('returns 404 if order does not exist', async () => {
   await req(app)
@@ -58,4 +59,20 @@ it('cancels correct order for authorized user', async () => {
   expect(databaseOrder?.status).toBe(OrderStatus.Cancelled)
 })
 
-it.todo('emits an OrderCanceled event')
+it('publishes an order:canceled event', async () => {
+  const ticket = await buildTicket()
+  const user1 = generateUserCookie()
+
+  const { body: createOrder } = await req(app)
+    .post('/api/orders')
+    .set('Cookie', user1)
+    .send({ ticketId: ticket.id })
+    .expect(201)
+
+  await req(app)
+    .delete('/api/orders/' + createOrder.id)
+    .set('Cookie', user1)
+    .expect(200)
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled()
+})
