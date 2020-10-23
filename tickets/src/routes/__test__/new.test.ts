@@ -1,3 +1,4 @@
+import { natsWrapper } from './../../natsWrapper'
 import { generateUserCookie } from './../../test/setup'
 import { Ticket } from '../../../models'
 import req from 'supertest'
@@ -72,4 +73,16 @@ it('creates a ticket with valid inputs', async () => {
 
   expect(endTickets[0].title).toEqual(title)
   expect(endTickets[0].price).toEqual(price)
+})
+
+it('publishes an event', async () => {
+  const title = 'arstarsteawfth'
+  const price = 23
+  await req(app)
+    .post('/api/tickets')
+    .set('Cookie', generateUserCookie())
+    .send({ title, price })
+    .expect(201)
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled()
 })
