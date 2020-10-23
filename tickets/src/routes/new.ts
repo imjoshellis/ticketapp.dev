@@ -1,7 +1,9 @@
+import { natsWrapper } from './../natsWrapper'
 import { body } from 'express-validator'
 import { requireAuth, validateRequest } from '@ije-ticketapp/common'
 import { Application, Request, Response } from 'express'
 import { Ticket } from '../../models'
+import { TicketCreatedPublisher } from '../events/publishers/TicketCreatedPublisher'
 
 export const addNewRoute = (app: Application) => {
   app.post(
@@ -25,6 +27,13 @@ export const addNewRoute = (app: Application) => {
         userId: req.currentUser!.id
       })
       await ticket.save()
+
+      new TicketCreatedPublisher(natsWrapper.client).publish({
+        id: ticket.id as string,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId
+      })
 
       return res.status(201).send(ticket)
     }
