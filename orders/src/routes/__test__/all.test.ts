@@ -1,13 +1,6 @@
 import req from 'supertest'
 import { app } from '../../app'
-import { Ticket } from '../../models'
-import { generateUserCookie } from './../../test/setup'
-
-const buildTicket = async () => {
-  const ticket = Ticket.build({ price: 20, title: 'title' })
-  await ticket.save()
-  return ticket
-}
+import { buildTicket, generateUserCookie } from './../../test/setup'
 
 it('fetches orders for a particular user', async () => {
   const ticket1 = await buildTicket()

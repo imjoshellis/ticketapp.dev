@@ -1,8 +1,9 @@
-import { generateUserCookie } from './../../test/setup'
+import { buildTicket, generateUserCookie } from './../../test/setup'
 import req from 'supertest'
 import { app } from '../../app'
 import mongoose from 'mongoose'
-import { Order, OrderStatus, Ticket } from '../../models'
+import { Order, OrderStatus } from '../../models'
+import { natsWrapper } from '../../natsWrapper'
 
 it('returns an error if the ticket does not exist', async () => {
   const ticketId = mongoose.Types.ObjectId()
@@ -14,8 +15,7 @@ it('returns an error if the ticket does not exist', async () => {
 })
 
 it('returns an error if the ticket is reserved', async () => {
-  const ticket = Ticket.build({ title: 'title', price: 20 })
-  await ticket.save()
+  const ticket = await buildTicket()
   const order = Order.build({
     userId: 'aawftahwfiet',
     status: OrderStatus.Created,
@@ -32,8 +32,7 @@ it('returns an error if the ticket is reserved', async () => {
 })
 
 it('reserves a ticket', async () => {
-  const ticket = Ticket.build({ title: 'title', price: 20 })
-  await ticket.save()
+  const ticket = await buildTicket()
 
   await req(app)
     .post('/api/orders')

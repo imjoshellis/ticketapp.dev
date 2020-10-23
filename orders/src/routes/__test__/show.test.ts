@@ -1,14 +1,7 @@
 import req from 'supertest'
 import { app } from '../../app'
-import { Ticket } from '../../models'
-import { generateUserCookie } from './../../test/setup'
+import { buildTicket, generateUserCookie } from './../../test/setup'
 import mongoose from 'mongoose'
-
-const buildTicket = async () => {
-  const ticket = Ticket.build({ price: 20, title: 'title' })
-  await ticket.save()
-  return ticket
-}
 
 it('returns 404 if order does not exist', async () => {
   await req(app)

@@ -1,15 +1,9 @@
+import mongoose from 'mongoose'
 import req from 'supertest'
 import { app } from '../../app'
-import { Order, OrderStatus, Ticket } from '../../models'
-import { generateUserCookie } from './../../test/setup'
-import mongoose from 'mongoose'
-
-const buildTicket = async () => {
-  const ticket = Ticket.build({ price: 20, title: 'title' })
-  await ticket.save()
-  return ticket
-}
+import { Order, OrderStatus } from '../../models'
 import { natsWrapper } from '../../natsWrapper'
+import { buildTicket, generateUserCookie } from './../../test/setup'
 
 it('returns 404 if order does not exist', async () => {
   await req(app)

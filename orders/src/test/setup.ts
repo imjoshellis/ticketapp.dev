@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import mongoose from 'mongoose'
+import { Ticket } from '../models'
 
 jest.mock('../natsWrapper')
 
@@ -43,4 +44,11 @@ export const generateUserCookie = () => {
   const base64 = Buffer.from(sessionJSON).toString('base64')
 
   return [`express:sess=${base64}`]
+}
+
+export const buildTicket = async () => {
+  const id = mongoose.Types.ObjectId().toHexString()
+  const ticket = Ticket.build({ id, price: 20, title: 'title' })
+  await ticket.save()
+  return ticket
 }
