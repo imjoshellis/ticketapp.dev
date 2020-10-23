@@ -1,3 +1,4 @@
+import { natsWrapper } from './../natsWrapper'
 import {
   BadRequestError,
   NotFoundError,
@@ -6,6 +7,7 @@ import {
 } from '@ije-ticketapp/common'
 import { Application, Request, Response } from 'express'
 import { body } from 'express-validator'
+import { OrderCreatedPublisher } from '../events'
 import { Order, Ticket, OrderStatus } from '../models'
 
 const EXPIRATION_WINDOW_SECONDS = 15 * 60
@@ -40,6 +42,14 @@ export const addNewRoute = (app: Application) => {
       })
 
       await order.save()
+
+      new OrderCreatedPublisher(natsWrapper.client).publish({
+        id: order.id,
+        status: order.status,
+        userId: order.userId,
+        expiresAt: order.expiresAt.toISOString(),
+        ticket: { id: order.ticket.id, price: order.ticket.price }
+      })
 
       res.status(201).send(order)
     }

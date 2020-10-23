@@ -42,4 +42,14 @@ it('reserves a ticket', async () => {
     .expect(201)
 })
 
-it.todo('emits an order created event')
+it('publishes an order:created event', async () => {
+  const ticket = await buildTicket()
+
+  await req(app)
+    .post('/api/orders')
+    .set('Cookie', generateUserCookie())
+    .send({ ticketId: ticket.id })
+    .expect(201)
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled()
+})
