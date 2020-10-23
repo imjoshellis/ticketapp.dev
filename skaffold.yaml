@@ -11,7 +11,7 @@ build:
   # projectId: ticketapp-dev-293320
   artifacts:
     # - image: us.gcr.io/ticketapp-dev-293320/auth
-    - image: imjoshellis/tickets/auth
+    - image: imjoshellis/tickets-auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -19,7 +19,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: imjoshellis/tickets/tickets
+    - image: imjoshellis/tickets-tickets
       context: tickets
       docker:
         dockerfile: Dockerfile
@@ -27,7 +27,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: imjoshellis/tickets/client
+    - image: imjoshellis/tickets-client
       context: client
       docker:
         dockerfile: Dockerfile
