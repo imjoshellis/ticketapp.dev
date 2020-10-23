@@ -2,6 +2,7 @@ import req from 'supertest'
 import { app } from '../../app'
 import { generateUserCookie } from '../../test/setup'
 import mongoose from 'mongoose'
+import { natsWrapper } from '../../natsWrapper'
 
 const validTitle = 'title'
 const validPrice = 10
@@ -89,4 +90,19 @@ it('updates the ticket with valid inputs', async () => {
 
   expect(showRes.body.price).toEqual(newTicket.price)
   expect(showRes.body.title).toEqual(newTicket.title)
+})
+
+it('publishes an event', async () => {
+  const newTitle = 'new ' + validTitle
+  const newPrice = 20 + validPrice
+  const newTicket = { title: newTitle, price: newPrice }
+  const createRes = await createTicket()
+
+  await req(app)
+    .put('/api/tickets/' + createRes.body.id)
+    .send(newTicket)
+    .set('Cookie', generateUserCookie())
+    .expect(200)
+
+  expect(natsWrapper.client.publish).toHaveBeenCalledTimes(2)
 })
