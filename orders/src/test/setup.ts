@@ -30,11 +30,11 @@ afterAll(async () => {
   await mongoose.connection.close()
 })
 
-export const generateUserCookie = (id = 'iaerhstieahrst') => {
+export const generateUserCookie = () => {
   const payload = {
     email: 'arst@arst.arst',
     password: 'arst',
-    id
+    id: mongoose.Types.ObjectId()
   }
 
   const userJwt = jwt.sign(payload, process.env.JWT_KEY!)
