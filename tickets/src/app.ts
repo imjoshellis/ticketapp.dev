@@ -4,6 +4,7 @@ import cookieSession from 'cookie-session'
 import express from 'express'
 import 'express-async-errors'
 import {
+  addAllRoute,
   addNewRoute,
   addShowRoute,
 } from './routes'
@@ -23,6 +24,7 @@ app.use(currentUser)
 
 addNewRoute(app)
 addShowRoute(app)
+addAllRoute(app)
 app.all('*', () => {
   throw new NotFoundError()
 })
