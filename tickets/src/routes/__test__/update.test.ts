@@ -1,3 +1,4 @@
+import { Ticket } from './../../models/ticket'
 import req from 'supertest'
 import { app } from '../../app'
 import { generateUserCookie } from '../../test/setup'
@@ -105,4 +106,25 @@ it('publishes an event', async () => {
     .expect(200)
 
   expect(natsWrapper.client.publish).toHaveBeenCalledTimes(2)
+})
+
+it('rejects editing a reserved ticket', async () => {
+  const newTitle = 'new ' + validTitle
+  const newPrice = 20 + validPrice
+  const newTicket = { title: newTitle, price: newPrice }
+  const { body: ticket } = await createTicket()
+
+  const mongoTicket = await Ticket.findById(ticket.id)
+
+  if (!mongoTicket) throw new Error('ticket not found')
+
+  const orderId = mongoose.Types.ObjectId().toHexString()
+  mongoTicket.set({ orderId })
+  await mongoTicket.save()
+
+  await req(app)
+    .put('/api/tickets/' + mongoTicket.id)
+    .send(newTicket)
+    .set('Cookie', generateUserCookie())
+    .expect(400)
 })

@@ -3,7 +3,8 @@ import {
   NotAuthorizedError,
   NotFoundError,
   requireAuth,
-  validateRequest
+  validateRequest,
+  BadRequestError
 } from '@ije-ticketapp/common'
 import { Application, Request, Response } from 'express'
 import { Ticket } from '../models'
@@ -37,6 +38,9 @@ export const addUpdateRoute = (app: Application) => {
       if (!ticket) throw new NotFoundError()
 
       if (ticket.userId !== req.currentUser!.id) throw new NotAuthorizedError()
+
+      if (ticket.orderId)
+        throw new BadRequestError('Cannot edit a reserved ticket')
 
       ticket.set({ title, price })
       await ticket.save()
