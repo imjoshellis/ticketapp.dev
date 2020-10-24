@@ -1,3 +1,4 @@
+import { addNewRoute } from './routes'
 import { currentUser, errorHandler, NotFoundError } from '@ije-ticketapp/common'
 import { json } from 'body-parser'
 import cookieSession from 'cookie-session'
@@ -16,6 +17,8 @@ app.use(
 )
 
 app.use(currentUser)
+
+addNewRoute(app)
 
 app.all('*', () => {
   throw new NotFoundError()
