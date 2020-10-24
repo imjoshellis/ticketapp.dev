@@ -36,13 +36,18 @@ export const addNewRoute = (app: Application) => {
       if (order.status !== OrderStatus.Created)
         throw new BadRequestError(`Order status is ${order.status}`)
 
-      stripe.charges.create({
-        amount: order.price * 100,
-        source: token,
-        currency: 'usd'
-      })
+      try {
+        await stripe.charges.create({
+          amount: order.price * 100,
+          source: token,
+          currency: 'usd'
+        })
+      } catch (e) {
+        res.status(e.statusCode).send({ errors: [{ message: e.message }] })
+        throw e
+      }
 
-      res.status(204).send({ success: true })
+      res.status(201).send({ success: true })
     }
   )
 }
