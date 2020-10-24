@@ -31,7 +31,7 @@ const setup = async () => {
 it('correctly replicates the data', async () => {
   const { listener, data, msg } = await setup()
 
-  listener.onMessage(data, msg)
+  await listener.onMessage(data, msg)
 
   const order = await Order.findById(data.id)
 
@@ -41,4 +41,12 @@ it('correctly replicates the data', async () => {
   expect(order.status).toEqual(data.status)
   expect(order.price).toEqual(data.ticket.price)
   expect(order.userId).toEqual(data.userId)
+})
+
+it('acks the message', async () => {
+  const { listener, data, msg } = await setup()
+
+  await listener.onMessage(data, msg)
+
+  expect(msg.ack).toHaveBeenCalled()
 })

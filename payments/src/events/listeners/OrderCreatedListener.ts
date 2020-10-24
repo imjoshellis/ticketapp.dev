@@ -14,8 +14,13 @@ class OrderCreatedListener extends Listener<OrderCreatedEvent> {
       version,
       ticket: { price }
     } = data
+
     const order = Order.build({ id, status, price, userId, version })
-    await order.save()
+    try {
+      await order.save()
+    } catch (err) {
+      console.error(err)
+    }
     msg.ack()
   }
 }
