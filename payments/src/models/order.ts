@@ -42,7 +42,7 @@ orderSchema.plugin(updateIfCurrentPlugin)
 
 orderSchema.statics.build = (newOrder: NewOrder) => {
   const { id, version, price, userId, status } = newOrder
-  new Order({ _id: id, version, price, userId, status })
+  return new Order({ _id: id, version, price, userId, status })
 }
 
 const Order = mongoose.model<OrderDoc, OrderModel>('Order', orderSchema)
