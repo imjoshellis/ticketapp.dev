@@ -13,7 +13,7 @@
     "setupFilesAfterEnv": ["./src/test/setup.ts"]
   },
   "dependencies": {
-    "@ije-ticketapp/common": "^1.0.16",
+    "@ije-ticketapp/common": "^1.0.18",
     "@types/bull": "^3.14.4",
     "bull": "^3.18.0",
     "node-nats-streaming": "^0.3.2",

@@ -272,10 +272,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@ije-ticketapp/common@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@ije-ticketapp/common/-/common-1.0.16.tgz#c8c97fb41eb3c32f3aa13b892e355f1ae1f731c2"
-  integrity sha512-qaXxXcCtg+AsHP74m0UXbnMudXPe0uVejHwbtkdh4E0kPLv/68fGQQBpHdxLIO0HAwInuGJsWGNRUIiUkIqMdw==
+"@ije-ticketapp/common@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@ije-ticketapp/common/-/common-1.0.18.tgz#d43f21a7a5d57231a56868d1b97ffb9ebbce5ee5"
+  integrity sha512-qBhO3ozugkN0gtA1L2XJhyTOXyYNVUjnK6vgIm26F5E51TOyg5/y/pAK9Go5X6e9XXelbqCbsftRQRGDPp7x7w==
   dependencies:
     "@types/cookie-session" "^2.0.41"
     "@types/express" "^4.17.8"
