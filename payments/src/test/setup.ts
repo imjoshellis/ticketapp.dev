@@ -3,6 +3,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server'
 import mongoose from 'mongoose'
 
 jest.mock('../natsWrapper')
+jest.mock('../stripe')
 
 let mongo: MongoMemoryServer
 
