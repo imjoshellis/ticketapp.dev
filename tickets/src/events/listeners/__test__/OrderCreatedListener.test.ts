@@ -1,4 +1,4 @@
-import { OrderCreatedEvent, OrderStatus } from '@ije-ticketapp/common'
+import { OrderCreatedEvent, OrderStatus, Subjects } from '@ije-ticketapp/common'
 import mongoose from 'mongoose'
 import { Message } from 'node-nats-streaming'
 import { Ticket } from '../../../models'
@@ -17,6 +17,7 @@ const setup = async () => {
     expiresAt: 'arst',
     ticket: { id: ticket.id, price: ticket.price }
   }
+
   // @ts-ignore
   const msg: Message = {
     ack: jest.fn()
@@ -40,5 +41,19 @@ it('acks the message', async () => {
   const { listener, data, msg } = await setup()
   await listener.onMessage(data, msg)
 
-  expect(msg.ack).toHaveBeenCalled()
+  expect(msg.ack).toHaveBeenCalledTimes(1)
+})
+
+it('publishes a ticket:updated event', async () => {
+  const { listener, data, msg } = await setup()
+  await listener.onMessage(data, msg)
+
+  expect(natsWrapper.client.publish).toHaveBeenCalledTimes(1)
+
+  const filteredCalls = (natsWrapper.client
+    .publish as jest.Mock).mock.calls.filter(
+    c => c[0] === Subjects.TicketUpdated
+  ).length
+
+  expect(filteredCalls).toBe(1)
 })
