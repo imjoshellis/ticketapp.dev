@@ -30,7 +30,9 @@ afterAll(async () => {
   await mongoose.connection.close()
 })
 
-export const generateUserCookie = (id = 'iaerhstieahrst') => {
+export const generateUserCookie = (
+  id = mongoose.Types.ObjectId().toHexString()
+) => {
   const payload = {
     email: 'arst@arst.arst',
     password: 'arst',
