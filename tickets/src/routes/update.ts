@@ -42,7 +42,8 @@ export const addUpdateRoute = (app: Application) => {
       await ticket.save()
 
       new TicketUpdatedPublisher(natsWrapper.client).publish({
-        id: ticket.id as string,
+        id: ticket.id,
+        version: ticket.version,
         title: ticket.title,
         price: ticket.price,
         userId: ticket.userId
