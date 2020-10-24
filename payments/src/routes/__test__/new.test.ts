@@ -55,7 +55,29 @@ it('returns a 400 if the order is cancelled', async () => {
     .expect(400)
 })
 
-it('returns a 204 with valid inputs', async () => {
+it('returns error with an invalid stripe token', async () => {
+  const id = mongoose.Types.ObjectId().toHexString()
+  const userId = mongoose.Types.ObjectId().toHexString()
+
+  const order = Order.build({
+    id,
+    price: 20,
+    status: OrderStatus.Created,
+    userId,
+    version: 0
+  })
+  await order.save()
+
+  const token = 'invalid'
+
+  await req(app)
+    .post('/api/payments')
+    .send({ token, orderId: order.id })
+    .set('Cookie', generateUserCookie(userId))
+    .expect(400)
+})
+
+it('returns a 201 with valid inputs', async () => {
   const id = mongoose.Types.ObjectId().toHexString()
   const userId = mongoose.Types.ObjectId().toHexString()
 
@@ -70,11 +92,13 @@ it('returns a 204 with valid inputs', async () => {
 
   const token = 'tok_visa'
 
-  await req(app)
+  const res = await req(app)
     .post('/api/payments')
     .send({ token, orderId: order.id })
     .set('Cookie', generateUserCookie(userId))
-    .expect(204)
+    .expect(201)
+
+  expect(res.body.success).toBe(true)
 
   expect(stripe.charges.create).toHaveBeenCalled()
 
