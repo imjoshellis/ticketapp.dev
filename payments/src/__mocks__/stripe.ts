@@ -4,7 +4,7 @@ export const stripe = {
       .fn()
       .mockImplementation(opts =>
         opts.source === 'tok_visa'
-          ? Promise.resolve()
+          ? Promise.resolve({ id: 'arstarst' })
           : Promise.reject({ statusCode: 400, message: 'invalid token' })
       )
   }

@@ -9,7 +9,7 @@ import {
 } from '@ije-ticketapp/common'
 import { Application, Request, Response } from 'express'
 import { body } from 'express-validator'
-import { Order } from '../models'
+import { Order, Payment } from '../models'
 import { stripe } from '../stripe'
 
 export const addNewRoute = (app: Application) => {
@@ -36,8 +36,10 @@ export const addNewRoute = (app: Application) => {
       if (order.status !== OrderStatus.Created)
         throw new BadRequestError(`Order status is ${order.status}`)
 
+      let charge
+
       try {
-        await stripe.charges.create({
+        charge = await stripe.charges.create({
           amount: order.price * 100,
           source: token,
           currency: 'usd'
@@ -47,7 +49,14 @@ export const addNewRoute = (app: Application) => {
         throw e
       }
 
-      res.status(201).send({ success: true })
+      const stripeId = charge.id
+      const payment = Payment.build({
+        orderId,
+        stripeId
+      })
+      await payment.save()
+
+      res.status(201).send({ success: true, stripeId })
     }
   )
 }

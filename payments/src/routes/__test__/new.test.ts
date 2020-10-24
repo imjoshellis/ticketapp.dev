@@ -2,7 +2,7 @@ import { generateUserCookie } from './../../test/setup'
 import req from 'supertest'
 import { app } from '../../app'
 import mongoose from 'mongoose'
-import { Order } from '../../models'
+import { Order, Payment } from '../../models'
 import { OrderStatus } from '@ije-ticketapp/common'
 import { stripe } from '../../stripe'
 
@@ -108,4 +108,12 @@ it('returns a 201 with valid inputs', async () => {
   expect(chargeOptions.amount).toBe(order.price * 100)
   expect(chargeOptions.currency).toBe('usd')
   expect(chargeOptions.source).toBe(token)
+
+  const payment = await Payment.findOne({ orderId: order.id })
+  expect(payment).toBeDefined()
+
+  if (!payment) throw new Error('payment not found')
+
+  expect(payment.stripeId).toBe(res.body.stripeId)
+  expect(payment.orderId).toBe(order.id)
 })
