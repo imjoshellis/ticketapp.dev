@@ -43,6 +43,14 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: imjoshellis/tickets-payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
     - image: imjoshellis/tickets-client
       context: client
       docker:
