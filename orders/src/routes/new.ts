@@ -10,7 +10,7 @@ import { body } from 'express-validator'
 import { OrderCreatedPublisher } from '../events'
 import { Order, Ticket, OrderStatus } from '../models'
 
-const EXPIRATION_WINDOW_SECONDS = 15 * 60
+const EXPIRATION_WINDOW_SECONDS = 1 * 60
 
 export const addNewRoute = (app: Application) => {
   app.post(
