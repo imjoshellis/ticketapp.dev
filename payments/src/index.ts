@@ -10,10 +10,12 @@ const start = async () => {
     MONGO_URI,
     NATS_CLIENT_ID,
     NATS_CLUSTER_ID,
-    NATS_URL
+    NATS_URL,
+    STRIPE_KEY
   } = process.env
 
   if (!JWT_KEY) throw new Error('JWT_KEY must be defined')
+  if (!STRIPE_KEY) throw new Error('STRIPE_KEY must be defined')
   if (!MONGO_URI) throw new Error('MONGO_URI must be defined')
   if (!NATS_CLIENT_ID) throw new Error('NATS_CLIENT_ID must be defined')
   if (!NATS_CLUSTER_ID) throw new Error('NATS_CLUSTER_ID must be defined')
