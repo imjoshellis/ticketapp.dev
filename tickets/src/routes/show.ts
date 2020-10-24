@@ -1,6 +1,6 @@
 import { NotFoundError } from '@ije-ticketapp/common'
 import { Application, Request, Response } from 'express'
-import { Ticket } from '../../models'
+import { Ticket } from '../models'
 
 export const addShowRoute = (app: Application) => {
   app.get('/api/tickets/:id', async (req: Request, res: Response) => {

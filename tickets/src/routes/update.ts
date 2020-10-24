@@ -6,7 +6,7 @@ import {
   validateRequest
 } from '@ije-ticketapp/common'
 import { Application, Request, Response } from 'express'
-import { Ticket } from '../../models'
+import { Ticket } from '../models'
 import { natsWrapper } from '../natsWrapper'
 import { TicketUpdatedPublisher } from '../events/publishers/TicketUpdatedPublisher'
 

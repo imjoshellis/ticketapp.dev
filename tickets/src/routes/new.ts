@@ -2,7 +2,7 @@ import { natsWrapper } from './../natsWrapper'
 import { body } from 'express-validator'
 import { requireAuth, validateRequest } from '@ije-ticketapp/common'
 import { Application, Request, Response } from 'express'
-import { Ticket } from '../../models'
+import { Ticket } from '../models'
 import { TicketCreatedPublisher } from '../events/publishers/TicketCreatedPublisher'
 
 export const addNewRoute = (app: Application) => {

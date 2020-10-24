@@ -1,6 +1,6 @@
 import { natsWrapper } from './../../natsWrapper'
 import { generateUserCookie } from './../../test/setup'
-import { Ticket } from '../../../models'
+import { Ticket } from '../../models'
 import req from 'supertest'
 import { app } from '../../app'
 
