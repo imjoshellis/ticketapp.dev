@@ -70,7 +70,7 @@ it('returns a 204 with valid inputs', async () => {
 
   const token = 'tok_visa'
 
-  const res = await req(app)
+  await req(app)
     .post('/api/payments')
     .send({ token, orderId: order.id })
     .set('Cookie', generateUserCookie(userId))
@@ -83,7 +83,5 @@ it('returns a 204 with valid inputs', async () => {
 
   expect(chargeOptions.amount).toBe(order.price * 100)
   expect(chargeOptions.currency).toBe('usd')
-  expect(chargeOptions.token).toBe(token)
-
-  expect(res.body.success).toBe(true)
+  expect(chargeOptions.source).toBe(token)
 })
