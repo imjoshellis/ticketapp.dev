@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current'
 import { OrderStatus } from '@ije-ticketapp/common'
 import { TicketDoc } from './ticket'
 
@@ -11,6 +12,7 @@ interface NewOrder {
 
 interface OrderDoc extends mongoose.Document {
   userId: string
+  version: number
   status: OrderStatus
   expiresAt: Date
   ticket: TicketDoc
@@ -38,10 +40,12 @@ const orderSchema = new mongoose.Schema(
         ret.id = ret._id
         delete ret._id
       }
-    },
-    versionKey: false
+    }
   }
 )
+
+orderSchema.set('versionKey', 'version')
+orderSchema.plugin(updateIfCurrentPlugin)
 
 orderSchema.statics.build = (newOrder: NewOrder) => new Order(newOrder)
 
