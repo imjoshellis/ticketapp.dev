@@ -1,3 +1,4 @@
+import { natsWrapper } from './../natsWrapper'
 // import { natsWrapper } from './../natsWrapper'
 import {
   BadRequestError,
@@ -9,6 +10,7 @@ import {
 } from '@ije-ticketapp/common'
 import { Application, Request, Response } from 'express'
 import { body } from 'express-validator'
+import { PaymentCreatedPublisher } from '../events/publishers/PaymentCreatedPublisher'
 import { Order, Payment } from '../models'
 import { stripe } from '../stripe'
 
@@ -55,6 +57,12 @@ export const addNewRoute = (app: Application) => {
         stripeId
       })
       await payment.save()
+
+      new PaymentCreatedPublisher(natsWrapper.client).publish({
+        id: payment.id,
+        orderId: payment.orderId,
+        stripeId: payment.stripeId
+      })
 
       res.status(201).send({ success: true, stripeId })
     }
