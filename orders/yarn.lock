@@ -273,9 +273,9 @@
     minimist "^1.2.0"
 
 "@ije-ticketapp/common@^1.0.14":
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/@ije-ticketapp/common/-/common-1.0.14.tgz#4929cc7a81b1811dd7c05a04cd070d833e902bb5"
-  integrity sha512-taTI5v6npRA+OQcLTklCpejZ+WUT7YnqWEe43+xr4rq1+MUPqI979QIjm1Ym2QAmH0JpjVZ9jKUJlIvTywlDMg==
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@ije-ticketapp/common/-/common-1.0.15.tgz#8fafe05a063dbfb11839fa8e07ac3bde114bd8c5"
+  integrity sha512-5BUpVcYZSjfk5Q6F/mrDw9bviCDACFR5iG+mlBk2L5L01cWnAecfz0G7DPHks5QwlS6dysRQiTAzIL9MnGWemA==
   dependencies:
     "@types/cookie-session" "^2.0.41"
     "@types/express" "^4.17.8"
