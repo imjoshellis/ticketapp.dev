@@ -42,7 +42,7 @@ export const addNewRoute = (app: Application) => {
         currency: 'usd'
       })
 
-      res.status(201).send({ success: true })
+      res.status(204).send({ success: true })
     }
   )
 }
