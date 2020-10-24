@@ -35,6 +35,14 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: imjoshellis/tickets-expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
     - image: imjoshellis/tickets-client
       context: client
       docker:
