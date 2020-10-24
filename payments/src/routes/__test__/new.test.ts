@@ -4,6 +4,7 @@ import { app } from '../../app'
 import mongoose from 'mongoose'
 import { Order } from '../../models'
 import { OrderStatus } from '@ije-ticketapp/common'
+import { stripe } from '../../stripe'
 
 it('returns a 404 if the order does not exist', async () => {
   const orderId = mongoose.Types.ObjectId().toHexString()
@@ -54,7 +55,7 @@ it('returns a 400 if the order is cancelled', async () => {
     .expect(400)
 })
 
-it('returns a 201 when successful', async () => {
+it('returns a 204 with valid inputs', async () => {
   const id = mongoose.Types.ObjectId().toHexString()
   const userId = mongoose.Types.ObjectId().toHexString()
 
@@ -67,11 +68,22 @@ it('returns a 201 when successful', async () => {
   })
   await order.save()
 
+  const token = 'tok_visa'
+
   const res = await req(app)
     .post('/api/payments')
-    .send({ token: 'arst', orderId: order.id })
+    .send({ token, orderId: order.id })
     .set('Cookie', generateUserCookie(userId))
-    .expect(201)
+    .expect(204)
+
+  expect(stripe.charges.create).toHaveBeenCalled()
+
+  const chargeMock = stripe.charges.create as jest.Mock
+  const chargeOptions = chargeMock.mock.calls[0][0]
+
+  expect(chargeOptions.amount).toBe(order.price * 100)
+  expect(chargeOptions.currency).toBe('usd')
+  expect(chargeOptions.token).toBe(token)
 
   expect(res.body.success).toBe(true)
 })
