@@ -14,6 +14,13 @@ export const Index = ({ currentUser, tickets }) => {
     </tr>
   ))
 
+  if (!tickets || tickets.length === 0)
+    return (
+      <div>
+        <h1>No Tickets Available</h1>
+      </div>
+    )
+
   return (
     <div>
       <h1>Tickets</h1>
