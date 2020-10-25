@@ -1,7 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 
-export const Index = ({ currentUser, tickets }) => {
+export const Index = ({ currentUser, tickets, errorMsg }) => {
+  if (!tickets || tickets.length === 0)
+    return (
+      <div>
+        <h1>No Tickets Available</h1>
+        {errorMsg ? <h4 className='text-danger'>{errorMsg}</h4> : null}
+      </div>
+    )
+
   const ticketRows = tickets.map(ticket => (
     <tr key={ticket.id}>
       <td>{ticket.title}</td>
@@ -13,13 +21,6 @@ export const Index = ({ currentUser, tickets }) => {
       </td>
     </tr>
   ))
-
-  if (!tickets || tickets.length === 0)
-    return (
-      <div>
-        <h1>No Tickets Available</h1>
-      </div>
-    )
 
   return (
     <div>
@@ -39,8 +40,14 @@ export const Index = ({ currentUser, tickets }) => {
 }
 
 Index.getInitialProps = async (ctx, client, currentUser) => {
-  const { data } = await client.get('/api/tickets')
-  return { tickets: data }
+  try {
+    const { data } = await client.get('/api/tickets')
+    return { tickets: data }
+  } catch (e) {
+    const errorMsg =
+      'There was a problem with the tickets server. Please try again later.'
+    return { errorMsg }
+  }
 }
 
 export default Index
