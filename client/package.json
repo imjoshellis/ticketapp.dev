@@ -11,7 +11,8 @@
     "bootstrap": "^4.5.3",
     "next": "^9.5.5",
     "react": "^16.6.0",
-    "react-dom": "^16.6.0"
+    "react-dom": "^16.6.0",
+    "react-stripe-checkout": "^2.6.3"
   },
   "devDependencies": {}
 }

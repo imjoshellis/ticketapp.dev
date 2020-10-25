@@ -6,7 +6,7 @@ export const App = ({ Component, pageProps, currentUser }) => (
   <>
     <Header currentUser={currentUser} />
     <section className='container'>
-      <Component {...pageProps} />
+      <Component {...pageProps} currentUser={currentUser} />
     </section>
   </>
 )
@@ -18,7 +18,11 @@ App.getInitialProps = async appContext => {
   } = await client.get('/api/users/currentuser')
   let pageProps = {}
   if (appContext.Component.getInitialProps) {
-    pageProps = await appContext.Component.getInitialProps(appContext.ctx)
+    pageProps = await appContext.Component.getInitialProps(
+      appContext.ctx,
+      client,
+      currentUser
+    )
   }
 
   return { pageProps, currentUser }

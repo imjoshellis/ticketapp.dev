@@ -4,10 +4,10 @@ import React, { useState } from 'react'
 const useRequest = ({ url, method, body, onSuccess }) => {
   const [alerts, setAlerts] = useState({})
 
-  const sendRequest = async () => {
+  const sendRequest = async (props = {}) => {
     try {
-      const res = await axios[method](url, body)
-      onSuccess()
+      const res = await axios[method](url, { ...body, ...props })
+      onSuccess(res.data)
     } catch (err) {
       const alertList = err.response.data.errors
       const everyAlertField = alertList
@@ -51,4 +51,5 @@ const useRequest = ({ url, method, body, onSuccess }) => {
   return { sendRequest, alerts, resetAlerts }
 }
 
+export { useRequest }
 export default useRequest

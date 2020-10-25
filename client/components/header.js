@@ -4,6 +4,8 @@ export const Header = ({ currentUser }) => {
   const links = [
     !currentUser && { label: 'sign up', href: '/auth/signup' },
     !currentUser && { label: 'sign in', href: '/auth/signin' },
+    currentUser && { label: 'sell tickets', href: '/tickets/new' },
+    currentUser && { label: 'my orders', href: '/orders' },
     currentUser && { label: 'sign out', href: '/auth/signout' }
   ]
     .filter(link => link)
