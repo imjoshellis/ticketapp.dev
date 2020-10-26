@@ -2,6 +2,7 @@ import { OrderCreatedListener } from './events/listeners/OrderCreatedListener'
 import { natsWrapper } from './natsWrapper'
 
 const start = async () => {
+  console.log('Starting Expiration Service (no endpoints)')
   const { NATS_CLIENT_ID, NATS_CLUSTER_ID, NATS_URL } = process.env
 
   if (!NATS_CLIENT_ID) throw new Error('NATS_CLIENT_ID must be defined')
