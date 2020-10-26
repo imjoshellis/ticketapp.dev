@@ -2,11 +2,13 @@ import { json } from 'body-parser'
 import express from 'express'
 import 'express-async-errors'
 import { errorHandler, NotFoundError } from '@ije-ticketapp/common'
+import {
+  addCurrentUserRoute,
+  addSignInRoute,
+  addSignOutRoute,
+  addSignUpRoute
+} from './routes'
 import cookieSession from 'cookie-session'
-import { addCurrentUserRoute } from './routes/currentUser'
-import { addSignInRoute } from './routes/signIn'
-import { addSignOutRoute } from './routes/signOut'
-import { addSignUpRoute } from './routes/signUp'
 
 const app = express()
 app.set('trust proxy', true)
