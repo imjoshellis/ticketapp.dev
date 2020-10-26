@@ -20,4 +20,4 @@ jobs:
         with:
           token: ${{ secrets.DO_TOKEN }}
       - run: doctl kubernetes cluster kubeconfig save ticketapp
-      - run: kubectl rollout restart rollout auth-depl
+      - run: kubectl rollout restart deployment auth-depl
