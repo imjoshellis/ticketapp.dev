@@ -6,6 +6,7 @@ import { ExpirationCompleteListener } from './events/listeners/ExpirationComplet
 import { PaymentCreatedListener } from './events/listeners/PaymentCreatedListener'
 
 const start = async () => {
+  console.log('Starting Orders Service (/api/orders)')
   const {
     JWT_KEY,
     MONGO_URI,
