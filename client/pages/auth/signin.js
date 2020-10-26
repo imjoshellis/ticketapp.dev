@@ -27,7 +27,7 @@ export const SignIn = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <h1>Sign Up</h1>
+        <h1>Sign In</h1>
         {alerts.other}
         <div className='form-group'>
           <label htmlFor='' className='text-uppercase font-weight-bold'>
