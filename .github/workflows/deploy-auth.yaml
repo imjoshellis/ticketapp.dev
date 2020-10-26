@@ -16,3 +16,8 @@ jobs:
           DHU: ${{ secrets.DH_USER }}
           DHP: ${{ secrets.DH_PASS }}
       - run: docker push imjoshellis/tickets-auth
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save ticketapp
+      - run: kubectl rollout restart rollout auth-depl
