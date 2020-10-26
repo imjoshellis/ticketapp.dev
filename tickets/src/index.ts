@@ -5,7 +5,7 @@ import { OrderCreatedListener } from './events/listeners/OrderCreatedListener'
 import { OrderCancelledListener } from './events/listeners/OrderCancelledListener'
 
 const start = async () => {
-  console.log('Starting Tickets Service (/api/tickets)')
+  console.log('Starting Tickets Service: /api/tickets')
   const {
     JWT_KEY,
     MONGO_URI,

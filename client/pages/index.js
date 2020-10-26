@@ -5,7 +5,7 @@ export const Index = ({ currentUser, tickets, errorMsg }) => {
   if (!tickets || tickets.length === 0)
     return (
       <div>
-        <h1>No Tickets Available</h1>
+        <h1>No Tickets Currently Available</h1>
         {errorMsg ? <h4 className='text-danger'>{errorMsg}</h4> : null}
       </div>
     )
