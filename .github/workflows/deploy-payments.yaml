@@ -1,0 +1,23 @@
+name: deploy-payments
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'payments/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd payments && docker build -t imjoshellis/tickets-payments .
+      - run: docker login -u $DHU -p $DHP
+        env:
+          DHU: ${{ secrets.DH_USER }}
+          DHP: ${{ secrets.DH_PASS }}
+      - run: docker push imjoshellis/tickets-payments
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save ticketapp
+      - run: kubectl rollout restart deployment payments-depl
