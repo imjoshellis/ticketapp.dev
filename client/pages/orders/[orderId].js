@@ -11,7 +11,7 @@ const ShowOrder = ({ order, currentUser }) => {
     body: {
       orderId: order.id
     },
-    onSuccess: () => Router.push('/orders')
+    onSuccess: () => Router.push('/account')
   })
   useEffect(() => {
     const findTimeRemaining = () => {
