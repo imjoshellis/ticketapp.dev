@@ -2,5 +2,8 @@
   "cSpell.words": [
     "currentuser",
     "ticketapp"
-  ]
+  ],
+  "files.watcherExclude": {
+    "**/target": true
+  }
 }
